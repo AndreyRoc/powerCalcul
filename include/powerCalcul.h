@@ -8,12 +8,12 @@
 #pragma once
 #ifndef COMPONENTS_LOADCONTROL_INCLUDE_POWERСALCUL_H_
 #define COMPONENTS_LOADCONTROL_INCLUDE_POWERСALCUL_H_
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include "../../Service.h" //Служебные глобальные константы и макросы
 #include <math.h>
+//#ifdef __cplusplus
+//extern "C" {
+//#endif
+#include "../../Service.h" //Служебные глобальные константы и макросы
+
 /*
  * Функция для расчета момента открытия симмистора в зависимости от уставки требуемой мощности.
  * Расчет будет вестись для одной полуволны. Чем раньше откроем симмистор, тем больше мощность в итоге получим.
@@ -23,7 +23,8 @@ extern "C" {
  * double 4/8 байт		2.225E-308.. 1.797E+308 Для AVR то же самое, что float.
  *	 	 	 	 	 	 	 	 	 На ESP и прочих 32-бит МК – 8 байт, точность – 15-16 знаков, расчет ведется не аппаратно
  *	Вариант 1:
- *	В основе Формула. Время(сек) = ACOS(1-(мощностьВпроцентах*2)/100)*(1/(Гц))/(2*ПИ) 	p.s.  ПИ = acos(-1.0)
+ *	В основе Формула.
+ *	Время(сек) = ACOS(1-((100% - мощностьВпроцентах)*2)/100)*(1/(Гц))/(2*ПИ) 	p.s.  ПИ = acos(-1.0)
  *	Значение от -1 до 1, для которого вычисляется арккосинус (обратный косинус).
  *	Функция acos возвращает арккосинус x в диапазоне от 0 до радиан π.
  *	const double PI = acos(-1.0);
@@ -39,10 +40,10 @@ extern "C" {
  *
  */
 //float valueHz = 50.0; //частота в электро сети
-float powerCalc(float valuePower); //выход: int - мксек(0..10000)  Вход: (значениеМощности 100.0-0.0%)
+float powerCalc(float valuePower); //выход: float - мксек(0..10000)  Вход: (значениеМощности 100.0-0.0%)
 
-#ifdef __cplusplus
-}
-#endif
+//#ifdef __cplusplus
+//}
+//#endif
 
 #endif /* COMPONENTS_LOADCONTROL_INCLUDE_POWERСALCUL_H_ */
